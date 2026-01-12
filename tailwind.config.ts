@@ -57,6 +57,12 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        chart: {
+          female: "hsl(var(--chart-female))",
+          male: "hsl(var(--chart-male))",
+          other: "hsl(var(--chart-other))",
+          average: "hsl(var(--chart-average))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
