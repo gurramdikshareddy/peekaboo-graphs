@@ -1,4 +1,4 @@
-import { Activity, MapPin, Users, TrendingUp, Heart, Scale, DollarSign, Stethoscope, ArrowUpDown, BarChart3, ClipboardList } from "lucide-react";
+import { Activity, MapPin, Users, TrendingUp, Heart, Scale, DollarSign, Stethoscope, ArrowUpDown, BarChart3, ClipboardList, Pill } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { StatCard } from "@/components/charts/StatCard";
 import { BMIBarChart } from "@/components/charts/BMIBarChart";
@@ -26,6 +26,14 @@ import { VisitTypeBarChart } from "@/components/charts/VisitTypeBarChart";
 import { VisitComparisonChart } from "@/components/charts/VisitComparisonChart";
 import { VisitRadialChart } from "@/components/charts/VisitRadialChart";
 import { VisitSummaryCards } from "@/components/charts/VisitSummaryCards";
+
+// Prescription Components
+import { PrescriptionBarChart } from "@/components/charts/PrescriptionBarChart";
+import { PrescriptionPieChart } from "@/components/charts/PrescriptionPieChart";
+import { DrugCategoryChart } from "@/components/charts/DrugCategoryChart";
+import { PrescriptionRadarChart } from "@/components/charts/PrescriptionRadarChart";
+import { PrescriptionTable } from "@/components/charts/PrescriptionTable";
+import { prescriptionStatistics } from "@/data/prescriptionData";
 
 const Index = () => {
   return (
@@ -55,18 +63,22 @@ const Index = () => {
 
       <main className="container max-w-7xl mx-auto px-6 pb-16">
         <Tabs defaultValue="bmi" className="w-full">
-          <TabsList className="grid w-full max-w-lg grid-cols-3 mb-8">
+          <TabsList className="grid w-full max-w-2xl grid-cols-4 mb-8">
             <TabsTrigger value="bmi" className="flex items-center gap-2">
               <Scale className="h-4 w-4" />
-              BMI Analysis
+              BMI
             </TabsTrigger>
             <TabsTrigger value="diagnosis" className="flex items-center gap-2">
               <Stethoscope className="h-4 w-4" />
-              Diagnosis Costs
+              Diagnosis
             </TabsTrigger>
             <TabsTrigger value="visits" className="flex items-center gap-2">
               <ClipboardList className="h-4 w-4" />
-              Visit Types
+              Visits
+            </TabsTrigger>
+            <TabsTrigger value="prescriptions" className="flex items-center gap-2">
+              <Pill className="h-4 w-4" />
+              Prescriptions
             </TabsTrigger>
           </TabsList>
 
@@ -213,6 +225,75 @@ const Index = () => {
                 <VisitComparisonChart />
                 <VisitRadialChart />
               </div>
+            </section>
+          </TabsContent>
+
+          {/* Prescriptions Tab Content */}
+          <TabsContent value="prescriptions">
+            <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-8">
+              <StatCard
+                title="Total Drugs"
+                value={prescriptionStatistics.totalDrugs}
+                icon={<Pill className="h-5 w-5" />}
+                description="Unique medications"
+                delay={0}
+              />
+              <StatCard
+                title="Prescriptions"
+                value={prescriptionStatistics.totalPrescriptions}
+                icon={<ClipboardList className="h-5 w-5" />}
+                description="Total issued"
+                delay={50}
+              />
+              <StatCard
+                title="Average"
+                value={prescriptionStatistics.avgPrescriptions.toFixed(0)}
+                icon={<BarChart3 className="h-5 w-5" />}
+                description="Per drug type"
+                delay={100}
+              />
+              <StatCard
+                title="Maximum"
+                value={prescriptionStatistics.maxPrescriptions}
+                icon={<TrendingUp className="h-5 w-5" />}
+                description="Highest count"
+                delay={150}
+              />
+              <StatCard
+                title="Minimum"
+                value={prescriptionStatistics.minPrescriptions}
+                icon={<ArrowUpDown className="h-5 w-5" />}
+                description="Lowest count"
+                delay={200}
+              />
+              <StatCard
+                title="Top Drug"
+                value="Enalapril"
+                icon={<Heart className="h-5 w-5" />}
+                description="Most prescribed"
+                delay={250}
+              />
+            </section>
+
+            <section className="space-y-8">
+              <PrescriptionBarChart />
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <PrescriptionPieChart />
+                <DrugCategoryChart />
+              </div>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <PrescriptionRadarChart />
+                <div className="flex items-center justify-center">
+                  <div className="text-center p-8">
+                    <Pill className="h-16 w-16 mx-auto text-primary/30 mb-4" />
+                    <h3 className="text-lg font-semibold mb-2">Prescription Analytics</h3>
+                    <p className="text-muted-foreground">
+                      Cardiovascular drugs (Enalapril, Atorvastatin) lead prescriptions
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <PrescriptionTable />
             </section>
           </TabsContent>
         </Tabs>
