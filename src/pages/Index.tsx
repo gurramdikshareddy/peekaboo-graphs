@@ -1,4 +1,4 @@
-import { Activity, MapPin, Users, TrendingUp, Heart, Scale, DollarSign, Stethoscope, ArrowUpDown, BarChart3 } from "lucide-react";
+import { Activity, MapPin, Users, TrendingUp, Heart, Scale, DollarSign, Stethoscope, ArrowUpDown, BarChart3, ClipboardList } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { StatCard } from "@/components/charts/StatCard";
 import { BMIBarChart } from "@/components/charts/BMIBarChart";
@@ -19,6 +19,13 @@ import { CostTrendLineChart } from "@/components/charts/CostTrendLineChart";
 import { DiagnosisCostTable } from "@/components/charts/DiagnosisCostTable";
 import { CostAreaChart } from "@/components/charts/CostAreaChart";
 import { diagnosisStatistics } from "@/data/diagnosisCostData";
+
+// Visit Type Components
+import { VisitTypePieChart } from "@/components/charts/VisitTypePieChart";
+import { VisitTypeBarChart } from "@/components/charts/VisitTypeBarChart";
+import { VisitComparisonChart } from "@/components/charts/VisitComparisonChart";
+import { VisitRadialChart } from "@/components/charts/VisitRadialChart";
+import { VisitSummaryCards } from "@/components/charts/VisitSummaryCards";
 
 const Index = () => {
   return (
@@ -48,7 +55,7 @@ const Index = () => {
 
       <main className="container max-w-7xl mx-auto px-6 pb-16">
         <Tabs defaultValue="bmi" className="w-full">
-          <TabsList className="grid w-full max-w-md grid-cols-2 mb-8">
+          <TabsList className="grid w-full max-w-lg grid-cols-3 mb-8">
             <TabsTrigger value="bmi" className="flex items-center gap-2">
               <Scale className="h-4 w-4" />
               BMI Analysis
@@ -56,6 +63,10 @@ const Index = () => {
             <TabsTrigger value="diagnosis" className="flex items-center gap-2">
               <Stethoscope className="h-4 w-4" />
               Diagnosis Costs
+            </TabsTrigger>
+            <TabsTrigger value="visits" className="flex items-center gap-2">
+              <ClipboardList className="h-4 w-4" />
+              Visit Types
             </TabsTrigger>
           </TabsList>
 
@@ -186,6 +197,22 @@ const Index = () => {
                 <CostAreaChart />
               </div>
               <DiagnosisCostTable />
+            </section>
+          </TabsContent>
+
+          {/* Visit Types Tab Content */}
+          <TabsContent value="visits">
+            <VisitSummaryCards />
+            
+            <section className="space-y-8 mt-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <VisitTypePieChart />
+                <VisitTypeBarChart />
+              </div>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <VisitComparisonChart />
+                <VisitRadialChart />
+              </div>
             </section>
           </TabsContent>
         </Tabs>
